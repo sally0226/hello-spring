@@ -1,33 +1,31 @@
 package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
-// 단위 테스트
-// -> 단위단위로 쪼개서 하는게 더 좋은 테스트
+// 통합 테스트
 
-class MemberServiceTest {
-    //빌드할 때 test코드는 프로덕트 코드에 포함되지 않음
-
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
+@SpringBootTest // 스프링 컨테이너와 테스트를 함께 실행한다
+@Transactional // 커밋하기 전까지는 쿼리가 디비에 반영이 안됨 , 이 성질 이용해서 test반복가능하도록 롤백해줌
+// 테스트 시작전에 트랜잭션을 시작하고 테스트 완료 후에 항상 롤백한다. (db에 데이터가 남지 않으므로 다음 테스트에 영향을 주지 않는다)
+public class MemberServiceIntegrationTest {
+    @Autowired MemberService memberService; // testcase할 때는 그냥 autowired로 받아도 됨
+    @Autowired MemberRepository memberRepository;
 
     @BeforeEach
     public void beforeEach(){
         memberRepository = new MemoryMemberRepository();
         memberService = new MemberService(memberRepository); //테스트마다 독립적으로 실행되도록 매번 새로 넣어줌
-    }
-
-    @AfterEach //테스트 하나 끝날 때 마다 실행
-    public void afterEach(){
-        memberRepository.clearStore(); // 데이터 비워주기
     }
 
     @Test
@@ -62,12 +60,5 @@ class MemberServiceTest {
 //        }
 
         //then
-    }
-    @Test
-    void findMembers() {
-    }
-
-    @Test
-    void findOne() {
     }
 }
