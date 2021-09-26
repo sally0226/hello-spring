@@ -33,7 +33,7 @@ public class MemberServiceIntegrationTest {
         // 뭔가가 주어졌을 때(given), 뭐를 실행했는데(when), 뭐가 나와야해(then) 문법!
         // given
         Member member = new Member();
-        member.setName("spring");
+        member.setName("spring121212");
         // when
         Long saveId = memberService.join(member);
         // then
