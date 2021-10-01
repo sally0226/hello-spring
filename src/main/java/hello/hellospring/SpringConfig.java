@@ -1,5 +1,6 @@
 package hello.hellospring;
 
+import hello.hellospring.aop.TimeTraceAop;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.*;
 import hello.hellospring.service.MemberService;
@@ -25,4 +26,10 @@ public class SpringConfig {
     public MemberService memberService() {
         return new MemberService(memberRepository);
     }
+
+    // AOP는 정형화된보다 그렇지 않은 것들이 많기 때문에, spring bean에 직접 등록해서 쓰는 것이 명시적으로 어떤 AOP가 쓰이고 있는지 확인할 수 있어 좋다
+//    @Bean
+//    public TimeTraceAop timeTraceAop() {
+//        return new TimeTraceAop();
+//    }
 }
